@@ -1,0 +1,82 @@
+{% extends './base.html' %}
+
+{% block title %}State of the art | Blogs{% endblock title %}
+
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'blog/css/home.css' %}">
+
+<section class="recentPosts">
+    <div class="recentPosts__header">
+        <div class="horizontalBar"></div>
+        <h2 class="recentPosts__header">Recent Posts</h2>
+        <div class="horizontalBar"></div>
+    </div>
+
+
+
+
+
+    <div class="articleGrid">
+    {% for article in article_list %}
+        <div class="articlePreview">
+            
+            
+            {% if not article.header_img == None and article.header_img %}
+                <div class="headerImg">
+                    <img src="{{ article.header_img.url }}" alt="">
+                </div>
+            {% endif %}
+            <div class="articleContent">
+                <div class="{{ article.domain }} articleDomain" >
+                    <p>{{article.domain}}</p>
+                </div>
+                <h3>
+                    <a href="{% url 'blog:detail' article.id %}">
+                        {{ article.title }}
+                    </a>
+                </h3>
+                <p class="articlePublishingDate"> Published on {{ article.publishing_date }}</p>
+                <p class="articleAuthor"> Written by {{ article.author.username }}</p>
+                <p class="articleAbstract"> {{article.abstract|truncatechars:400}} </p>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+
+</section>
+
+{% comment %}
+    <!-- <div class="articleGridCol">
+        {% for article in article_list %}
+            {% if forloop.counter|add:"1"|divisibleby:"3" %}
+                <div class="articlePreview">
+                    {% if not article.header_img == None %}
+                        <div class="headerImg">
+                            <img src="{{ article.header_img.url }}" alt="">
+                        </div>
+                    {% endif %}
+                    <div class="articleContent">
+                        <p class="articlePublishingDate">{{ article.publishing_date }}</p>
+                        <h3>
+                            <a href="{% url 'blog:detail' article.id %}">
+                                {{ article.title }}
+                            </a>
+                        </h3>
+                        <p> Written by {{ article.author.username }}</p>
+                        <p> {{article.abstract}} </p>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div> -->
+
+{% endcomment %}
+   
+
+{% endblock content %}
+
+
+

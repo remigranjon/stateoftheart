@@ -1,0 +1,12 @@
+{% for chapter in chapters %}
+    {% if forloop.counter == 1 %}
+        <h{{level}}>{{chapter.title}}</h{{level}}>
+        <p>{{chapter.text}}</p>
+        {% if chapter.children %}
+            {% include "blog/detail_children.html" with children=chapter.children.all level=level|add:"1" %}
+        {% endif %}
+        {% if chapter.next %}
+            {% include "blog/detail_next.html" with chapters=chapter.next.all level=level %}
+        {% endif %}
+    {% endif %}
+{% endfor %}

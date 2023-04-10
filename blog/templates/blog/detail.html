@@ -1,0 +1,191 @@
+{% extends './base.html' %}
+
+
+
+
+{% block title %}{{ article.title|truncatechars:20 }}{% endblock title %}
+
+{% block nav %}
+<a href="{% url 'blog:home' %}">Home</a>
+<a href="{% url 'blog:updateArticle' article_id=article.id %}">Update</a>
+<a href="{% url 'blog:deleteArticle' article_id=article.id %}">Delete</a>
+{% endblock %}
+
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'blog/css/detail.css' %}">
+
+<div class="titleBannerWrapper">
+    <p class="titleBanner">
+        {{ article.title }}
+    </p>
+</div>
+
+
+<div class="wrapper">
+
+    <section class="tableOfContents">
+        <div class="reduceButtonWrapper">
+            <div class="blank"></div>
+            <button class="reduceButton reduce" onclick="actionTableOfContents()">
+                <img src="{% static 'blog/images/icons/ArrowBar.svg' %}" alt="Button to reduce the table of contents">
+            </button>
+        </div>
+        <div class="tableOfContentsWrapper">
+            <div class="tableOfContents_header">
+                <h2>Table of Contents :</h2>
+            </div>
+            <div class="tableOfContents__content">
+                {% for block in data %}
+                    {% if block.type == "header" %}
+                        <a href="#{{block.text|cut:' '}}">
+                            <h{{block.level}}>
+                                {% autoescape off %}    
+                                    {{block.text}}
+                                {% endautoescape %}
+                            </h{{block.level}}>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <a href="#comments">
+                <h2>Comments</h2>
+            </a>
+        </div>
+    </section>
+
+
+    <section class="article">
+        <div class="articleHeader">
+            <p class="articleDomain {{article.domain}}">{{ article.domain }}</p>
+            <div class="articleHeader__illustration">
+                {% if article.header_img %}
+                <img src="{{ article.header_img.url }}" alt="">
+                {% endif %}
+            </div>
+            <h1 class="articleTitle"> {{ article.title }} </h1>
+            <p class="articleAuthor">Written by {{article.author}}</p>
+            <p class="articlePublishingDate">Published on {{article.publishing_date}}</p>
+            <p class="articleAbstract"> {{ article.abstract }} </p>
+        </div>
+        
+        
+        
+        <div class="articleContent">
+            {% for block in data %}
+                {% if block.type == "header" %}
+                    <h{{block.level}} id="{{block.text|cut:' '}}" class="articleAnchor">
+                        {% autoescape off %}    
+                        {{block.text}}
+                        {% endautoescape %}
+                    </h{{block.level}}>
+                {% endif %}
+                {% if block.type == "paragraph" %}
+                    <p>
+                        {% autoescape off %}
+                        {{block.text}}
+                        {% endautoescape %}
+                    </p>
+                {% endif %}
+                {% if block.type == "image" %}
+                    <div class="imgWrapper">
+                        <img src="{{block.url}}" alt="{% autoescape off %}{{block.alt}}{% endautoescape %}">
+                        <p>
+                            {% autoescape off %}
+                            {{block.alt}}
+                            {% endautoescape %}
+                        </p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+    </section>
+
+    <section class="comments" id="comments">
+        
+        <div class = "commentsHeader">
+            <div class="grey-bar"></div>
+            <p>{{comments|length}} Comments</p>
+            <div class="grey-bar"></div>
+        </div>
+        
+        {% if user.is_authenticated %}
+            <form action="{% url 'blog:writeComment' article.id %}" method="post">
+                {% csrf_token %}
+                <textarea name="comment_text" class="commentInputText" cols="30" rows="5" placeholder = "Enter your comment here..." required></textarea>
+                <input type="submit" value="Post Comment" class="commentSubmit">
+            </form>
+        
+        {% endif %}
+
+        {% if not user.is_authenticated %}
+            <p class="logInAdvice">Please log in to comment</p>
+        {% endif %}
+
+        
+        <input type="hidden" value="{% url 'blog:deleteComment' %}" id="urlDeleteComment">
+
+        {% for comment in comments %}
+            {% if not comment.parent %}
+            <div class="comment parentComment">
+                <div class="commentHeader">
+                    <div class="commentHeader__data">
+                        <p class="commentAuthor">{{comment.author}}</p>
+                        <p class="commentPublishingDate">{{comment.publishing_date|date:"F j, Y"}}</p>
+                    </div>
+                    <div class="commentHeader__buttons">
+                        {% if user.is_authenticated %}
+                        <button onclick="reply('{{comment.id}}')" class="replyButton">Reply</button>
+                        {% endif %}
+                        {% if user.id == comment.author.id  or user.id == article.author.id %}
+                        <button onclick="deleteComment('{{comment.id}}','{{article.id}}')" class="deleteButton">Delete</button>
+                        <form action="{% url 'blog:deleteComment' %}" method="post" id="deleteForm{{comment.id}}">
+                            {% csrf_token %}
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+                <p class="commentText">{{comment.text}}</p>
+                <form id="reply{{comment.id}}" method="post" action="{% url 'blog:writeComment' article.id %}">{% csrf_token %}</form>
+                
+                {% if comment.children.all|length > 0 %}
+                {% include "./detail_children.html" with children=comment.children.all article=article %}
+                {% endif %}
+
+            </div>
+            {% endif %}
+        {% endfor %}
+    </section>
+
+</div>
+
+
+
+
+{% for chapter in article.chapter_set.all %}
+    {% if not chapter.parent and not chapter.previous %}
+    <h2>{{chapter.title}}</h2>
+        {% if chapter.text %}
+        <p>{{chapter.text}}</p>
+        {% endif %}
+
+        {% if chapter.children.all|length > 0 %}
+        {% include "./detail_children.html" with children=chapter.children.all level=3 %}
+        {% endif %}
+
+        {% if chapter.next %}
+        {% include "blog/detail_next.html" with chapters=chapter.next.all level=2 %}
+        {% endif %}
+
+    {% endif %}
+
+    
+{% endfor %}
+
+<script src="{% static 'blog/js/detail.js' %}"></script>
+
+
+{% endblock content %}

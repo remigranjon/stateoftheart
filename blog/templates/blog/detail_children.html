@@ -1,0 +1,45 @@
+{% for comment in children %}
+    <div class="comment">
+        <div class="commentHeader">
+            <div class="commentHeader__data">
+                <p class="commentAuthor">{{comment.author}}</p>
+                <p class="commentPublishingDate">{{comment.publishing_date|date:"F j, Y"}}</p>
+            </div>
+            <div class="commentHeader__buttons">
+                {% if user.is_authenticated %}
+                <button onclick="reply('{{comment.id}}')" class="replyButton">Reply</button>
+                {% endif %}
+                {% if user.id == comment.author.id  or user.id == article.author.id %}
+                <button onclick="deleteComment('{{comment.id}}','{{article.id}}')" class="deleteButton">Delete</button>
+                <form action="{% url 'blog:deleteComment' %}" method="post" id="deleteForm{{comment.id}}">
+                    {% csrf_token %}
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        <p class="commentText">{{comment.text}}</p>
+        <form id="reply{{comment.id}}" method="post" action="{% url 'blog:writeComment' article.id %}">{% csrf_token %}</form>
+        
+        {% if comment.children.all|length > 0 %}
+        {% include "blog/detail_children.html" with children=comment.children.all article=article %}
+        {% endif %}
+    
+    </div>
+
+
+
+
+
+
+
+    {% comment %}
+    <h{{level}}>{{child.title}}</h{{level}}>
+    <p>{{child.text}}</p>
+    {% if child.children %}
+        {% include "blog/detail_children.html" with children=child.children.all level=level|add:"1" %}
+    {% endif %}
+    {% if child.next %}
+    {% include "blog/detail_next.html" with chapters=child.next.all level=level %}
+    {% endif %}
+    {% endcomment %}
+{% endfor %}

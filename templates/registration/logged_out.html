@@ -1,0 +1,10 @@
+{% extends "blog/base.html" %}
+
+{% block nav %}
+<a href="{% url 'blog:home' %}">Home</a>
+{% endblock %}
+
+{% block content %}
+  <p>Logged out!</p>
+  <a href="{% url 'login'%}">Click here to login again.</a>
+{% endblock %}

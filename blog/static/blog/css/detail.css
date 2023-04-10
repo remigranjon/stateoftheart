@@ -1,0 +1,346 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+body {
+    font-family: 'Source Serif Pro', serif;
+}
+
+.wrapper {
+    display: grid;
+    align-items: start;
+    margin: 20px 10px;
+    grid-template-columns: auto 1fr;
+}
+
+.titleBannerWrapper {
+    position: sticky;
+    top: 61px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    z-index: 5;
+}
+
+.titleBanner {
+    background-color: white;
+    width: 100%;
+    padding: 20px 20px 30px 20px;
+    text-align: center;
+    font-size: 1.1rem;
+    box-shadow: 0 0 6px lightgrey;
+    margin-bottom: 10px;
+}
+
+.tableOfContents {
+    grid-column: 1;
+    grid-row: 2;
+    position : sticky;
+    top : 81px;
+    padding-left: 20px;
+}
+
+.reduceButtonWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.reduceButton {
+    border: none;
+    background: none;
+    margin-right: 5px;
+    transition: all .5s ease-in-out;
+
+}
+
+.reduceButton img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+}
+
+.tableOfContentsWrapper {
+    width: 300px;
+    height: 70vh;
+    transition: width 1s ease-in-out; 
+    display: flex;
+    flex-direction: column;
+    padding-right: 20px;
+
+}
+
+.tableOfContents__content {
+    overflow: hidden;
+    flex-shrink: 2;
+}
+
+
+.tableOfContents__content:hover {
+    overflow-y: scroll;
+    padding-right: 10px;
+
+}
+
+.tableOfContents h2 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.tableOfContents h3 {
+    font-size: 0.9rem;
+    font-weight: 400;
+    margin-left: 20px;
+}
+
+.tableOfContents_header h2{
+    border-bottom: solid 1px black;
+    width: fit-content;
+    font-size: 1.2rem;
+}
+
+
+
+.article {
+    grid-column: 2;
+    grid-row: 2;
+    border-left : 1px dashed grey;
+    padding: 0 40px 40px 40px;
+}
+/* .tableOfContentsSpace {
+    width : 300px;
+} */
+
+.articleHeader {
+    width: 100%;
+    margin: 10px auto;
+    padding-bottom: 30px;
+    border-bottom: 1px dashed grey;
+}
+
+.articleDomain {
+    padding: 10px;
+    width: fit-content;
+
+}
+
+.Chemistry {
+    background-color: #0b5e85;
+    color: white;
+}
+
+.Ecology {
+    background-color: rgb(13, 114, 22);
+    color: white;
+}
+
+.Physics {
+    background-color: rgb(65, 65, 65);
+    color: white;
+}
+
+.articleHeader img{
+    height: 150px;
+    object-fit: cover;
+    width: calc(100% - 30px);
+}
+
+.articleHeader__illustration {
+    width: calc( 100% - 30px);
+    position: relative;
+    top: -20px;
+    left: 30px;
+    z-index: -1;
+}
+
+.articleTitle{
+    font-weight: 700;
+    font-size: 2.5rem;
+    white-space: pre-wrap;
+}
+
+.articleAbstract{
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+    white-space: pre-wrap;
+}
+
+.articlePublishingDate {
+    font-weight: 600;
+    margin: 20px 0
+}
+
+.articleContent {
+    width: 700px;
+    margin: 50px auto;
+    /* font-family: 'Montserrat', Arial, Helvetica, sans-serif; */
+}
+
+.articleContent h2 {
+    font-size: 1.9rem;
+    margin: 50px 0;
+}
+
+.articleContent h3 {
+    font-size: 1.5rem;
+    margin: 40px 30px;
+}
+
+.articleContent p {
+    font-size: 1.2rem;
+    line-height: 2rem;
+}
+
+.articleAnchor::before {
+    display: block; 
+    content: " "; 
+    margin-top: -80px; 
+    height: 80px; 
+    visibility: hidden; 
+    pointer-events: none;
+}
+
+.articleContent .imgWrapper {
+    margin : 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.articleContent .imgWrapper img {
+    object-fit: contain;
+    max-width: 500px;
+    max-height: 500px;
+}
+
+.articleContent .imgWrapper p {
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.comments {
+    grid-column: 2;
+    grid-row: 3;
+    padding: 0 15px;
+    
+}
+
+.commentsHeader {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin: 20px 30px;
+}
+
+.commentsHeader p {
+    width: 300px;
+    text-align: center;
+}
+
+.grey-bar {
+    border-top: grey 1px solid;
+    position: relative;
+    top: 10px;
+    width: 100%;
+}
+
+.commentInputText {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 1rem;
+    padding: 10px;
+    width: 100%;
+    resize: vertical;
+}
+
+.commentSubmit {
+    margin: 30px 0;
+    padding: 10px;
+    border-radius: 0;
+    border: none;
+    background-color: black;
+    color: white;
+    font-weight: 600;
+    font-family: 'Source Serif Pro', serif;
+    cursor: pointer;
+}
+
+.comment {
+    border-top: 1px rgb(240, 240, 240) solid;
+    margin-left: 60px;
+    padding: 20px 0;
+}
+
+.parentComment {
+    margin-left: 0;
+}
+
+.commentHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.commentHeader__data {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items:end;
+    margin : 15px 0;
+}
+
+.commentAuthor {
+    font-weight: 600;
+    font-size: 1.2rem;
+
+}
+
+.commentPublishingDate {
+    color : grey;
+    font-size: 0.9rem;
+    line-height: 20px;
+}
+
+.commentHeader__buttons button {
+    background: none;
+    border: none;
+    color: #2d53fe;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-right: 20px;
+    cursor:pointer;
+}
+
+.replyButton {
+    background: none;
+    border: none;
+    color: #2d53fe;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-right: 20px;
+}
+
+.commentText {
+    padding: 15px;
+    max-width : 700px;
+    box-shadow: 0 0 6px lightgrey;
+    border-radius: 5px;
+    background-color: rgb(235, 241, 248);
+    margin-bottom: 20px;
+    white-space: pre-wrap;
+}
+
+.logInAdvice {
+    margin: 20px auto;
+    font-size: 0.9rem;
+    font-style: italic;
+    width: fit-content;
+}

@@ -1,0 +1,23 @@
+{% extends './base.html' %}
+
+{% block title %}Your article has been saved{% endblock title %}
+
+{% block nav %}
+<a href="{% url 'blog:home' %}">Home</a>
+{% endblock %}
+
+{% block content %}
+{% comment %}
+<h1>{{articleTitle}}</h1>
+<p>{{articleAbstract}}</p>
+<p>{{articleData}}</p>
+<p>{{articleId}}</p>
+<p>------------POST--------------</p>
+<p>{{POST}}</p>
+{% endcomment %}
+<p>----------Errors------------</p>
+<p>{{error}}</p>
+<p>------Article Data--------</p>
+<p>{{article.data}}</p>
+<p>Your article has been saved</p>
+{% endblock content %}

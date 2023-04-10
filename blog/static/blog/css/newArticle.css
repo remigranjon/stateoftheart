@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+body {
+    font-family: 'Source Serif Pro', serif;
+}
+
+form {
+    display : flex;
+    flex-direction: column;
+    margin : 10px 100px;
+
+}
+
+.titleWrapper {
+    margin : 20px auto;
+}
+
+#id_title {
+    border: none;
+    width: 1000px;
+    font-family: 'Source Serif Pro', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    resize: none;
+    outline: none;
+}
+
+.abstractWrapper {
+    margin : 20px auto;
+}
+
+#id_abstract {
+    border : none;
+    width: 1000px;
+    font-family: 'Source Serif Pro', serif;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 400;
+    outline: none;
+    box-shadow: 0 0 6px lightgrey;
+    padding: 20px;
+}
+
+.domainWrapper {
+    margin: 20px auto;
+    width: 1000px;
+}
+
+.publishingDateWrapper {
+    margin: 20px auto;
+    width: 1000px;
+}
+
+.headerImgWrapper {
+    margin: 20px auto;
+    width: 1000px;
+    padding-bottom: 40px;
+    border-bottom: grey dashed 1px;
+}
+
+#editorjs {
+    box-shadow: 0 0 4px lightgrey;
+    width: 800px;
+    padding: 20px;
+    margin: 20px auto;
+}
