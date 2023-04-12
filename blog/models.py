@@ -40,7 +40,10 @@ class Comment(models.Model) :
 
 class Tag(models.Model) :
     name = models.CharField(max_length=250)
-    article = models.ManyToManyField(Article)
+    articles = models.ManyToManyField(Article)
+
+    def __str__(self):
+        return self.name
 
 
 # -----------------------Chapter before using Editor.js----------------------

@@ -70,6 +70,40 @@ function saveArticle () {
   });
 }
 
+function addTag (event) {
 
-document.getElementById("id_title").setAttribute("spellcheck", "false")
-document.getElementById("id_abstract").setAttribute("spellcheck", "false")
+  let newTagValue = document.getElementById('newTag').value
+  const tags = document.getElementsByClassName("tags")[0]
+  const tagsInput = document.getElementById("tags");
+
+  const newTag = document.createElement('div');
+  const newTagText = document.createElement('p');
+  const newTagDelete = document.createElement("button");
+
+
+  newTag.classList.add("tag");
+  
+  newTagValue = newTagValue.replace(" ","-");
+
+  newTagText.innerHTML = newTagValue;
+  
+  // Ajout du tag à l'input "tags"
+  tagsInput.value = tagsInput.value + newTagValue + " ";
+    
+  newTagDelete.innerHTML = 'x';
+  newTagDelete.onclick = (event)=>{
+    event.preventDefault();
+    tags.removeChild(newTag);
+    // suppression du tag dans l'input "tags"
+    const tagToDelete = " " + newTagValue + " ";
+    tagsInput.value = tagsInput.value.replace(tagToDelete, " ");
+  }
+
+  tags.appendChild(newTag);
+  newTag.appendChild(newTagText);
+  newTag.appendChild(newTagDelete);
+
+
+}
+// document.getElementById("id_title").setAttribute("spellcheck", "false")
+// document.getElementById("id_abstract").setAttribute("spellcheck", "false")

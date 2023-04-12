@@ -2,7 +2,7 @@ from django.http import HttpResponse
 # Create your views here.
 from django.views import generic
 from django.shortcuts import get_object_or_404, render, redirect
-from blog.models import Article, Comment
+from blog.models import Article, Comment, Tag
 from .forms import *
 
 
@@ -82,7 +82,7 @@ def saveArticle(request):
             form = ArticleForm(request.POST, request.FILES, instance=article)
             if form.is_valid() :
                 form.save()
-                article = get_object_or_404(Article, pk=request.POST["articleId"])
+                # article = get_object_or_404(Article, pk=request.POST["articleId"])
                 if article.header_img == None or not article.header_img:
                     if article.domain == "Chemistry" :
                         article.header_img = "domains/chemistry.jpg"
@@ -116,6 +116,21 @@ def saveArticle(request):
                     elif article.domain == "Physics" :
                         article.header_img = "domains/physics.jpg"
                 article.save()
+
+                if request.POST["tags"] != " " :
+                    tags = request.POST["tags"].split(" ");
+                    del tags[0]
+                    tags.pop()
+                    if len(tags)!=0 :
+                        for tag in tags :
+                            normalTag = tag.lower()
+                            if len(Tag.objects.filter(name=normalTag)) > 0  :
+                                Tag.objects.get(name=normalTag).articles.add(article)
+                            else :
+                                newTag = Tag(name=normalTag)
+                                newTag.save()
+                                newTag.articles.add(article)
+
                 if "articleId" in request.POST :
                     return render(request, 'blog/articleSaved.html', context={
                     "POST" : json.dumps(request.POST),

@@ -7,17 +7,19 @@ body {
 form {
     display : flex;
     flex-direction: column;
-    margin : 10px 100px;
+    margin : 10px auto;
+    max-width: 1000px;
 
 }
 
 .titleWrapper {
     margin : 20px auto;
+    width: 100%;
 }
 
 #id_title {
     border: none;
-    width: 1000px;
+    width: 100%;
     font-family: 'Source Serif Pro', serif;
     font-size: 2rem;
     font-weight: 700;
@@ -28,11 +30,12 @@ form {
 
 .abstractWrapper {
     margin : 20px auto;
+    width: 100%;
 }
 
 #id_abstract {
     border : none;
-    width: 1000px;
+    width: 100%;
     font-family: 'Source Serif Pro', serif;
     font-size: 1rem;
     font-style: italic;
@@ -44,17 +47,67 @@ form {
 
 .domainWrapper {
     margin: 20px auto;
-    width: 1000px;
+    width: 100%;
 }
 
 .publishingDateWrapper {
     margin: 20px auto;
-    width: 1000px;
+    width: 100%;
+}
+
+.tagsWrapper {
+    display: flex;
+    flex-direction: row;
+    gap : 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.tagsWrapper label {
+    flex-shrink: 0;
+}
+
+.tagsButton {
+    background: none;
+    cursor: pointer;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.tags {
+    display : flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    /* grid-template-columns:repeat(auto-fill,minmax(0,auto));
+    grid-template-rows: auto; */
+    gap : 10px;
+    width: 100%;
+    flex-shrink: 1;
+    margin-left: 20px;
+    /* max-width: 300px; */
+}
+
+.tag {
+    background-color: rgb(233, 233, 233);
+    border : grey solid 1px;
+    border-radius: 5px;
+    display : flex;
+    flex-direction: row;
+    gap: 5px;
+    padding : 5px;
+    width :fit-content;
+}
+
+.tag button {
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .headerImgWrapper {
     margin: 20px auto;
-    width: 1000px;
+    width: 100%;
     padding-bottom: 40px;
     border-bottom: grey dashed 1px;
 }
