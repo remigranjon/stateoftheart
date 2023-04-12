@@ -37,6 +37,14 @@
         <label for="{{ form.publishing_date.id_for_label }}">Article's publishing date : </label>
         {{ form.publishing_date }}
     </div>
+    <input type="hidden" id="tagsToAdd" value="{{tagsToAdd}}">
+    <div class="tagsWrapper">
+        <label for="newTag">Add some tags to define your article : </label>
+        <input type="text" name="newTag" id="newTag">
+        <button type="button" onclick="addTagFromEvent()" class="tagsButton">+</button>
+        <div class="tags"></div>
+        <input type="hidden" name="tags" id="tags" value=" ">
+    </div>
     <div class="headerImgWrapper" >
         {{ form.header_img.errors }} 
         <label for="{{ form.header_img.id_for_label }}">(Optional) Select an image to illustrate your article : </label>

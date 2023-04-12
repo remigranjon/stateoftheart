@@ -91,14 +91,29 @@ def saveArticle(request):
                     elif article.domain == "Physics" :
                         article.header_img = "domains/physics.jpg"
                 article.save()
-                if "articleId" in request.POST :
-                    return render(request, 'blog/articleSaved.html', context={
-                    "POST" : json.dumps(request.POST), "article": article,
-                    })
+                
+                article.tag_set.clear()
 
+                if request.POST["tags"] != " " :
+                    tags = request.POST["tags"].split(" ");
+                    del tags[0]
+                    tags.pop()
+                    if len(tags)!=0 :
+                        for tag in tags :
+                            normalTag = tag.lower()
+                            if len(Tag.objects.filter(name=normalTag)) > 0  :
+                                Tag.objects.get(name=normalTag).articles.add(article)
+                            else :
+                                newTag = Tag(name=normalTag)
+                                newTag.save()
+                                newTag.articles.add(article)
+
+                
                 return render(request, 'blog/articleSaved.html', context={
-                    "POST" : json.dumps(request.POST),
-                    })  
+                "POST" : json.dumps(request.POST), "article": article,
+                })
+
+ 
             else :
                 return render(request, 'blog/articleSaved.html', context={"error":form.errors})
 
@@ -131,13 +146,9 @@ def saveArticle(request):
                                 newTag.save()
                                 newTag.articles.add(article)
 
-                if "articleId" in request.POST :
-                    return render(request, 'blog/articleSaved.html', context={
-                    "POST" : json.dumps(request.POST),
-                    })
-
                 return render(request, 'blog/articleSaved.html', context={
-                    "POST" : json.dumps(request.POST), "article": article
+                    "POST" : json.dumps(request.POST), 
+                    "article": article,
                     })  
             else :
                 return render(request, 'blog/articleSaved.html', context={"error":form.errors})
@@ -162,7 +173,16 @@ def saveArticle(request):
 def updateArticle(request, article_id) :
     article = get_object_or_404(Article, pk=article_id)
     form = ArticleForm(instance=article)
-    return render(request, 'blog/updateArticle.html', {"article":article, "form":form})
+    tagsToAdd = ""
+
+    for tag in article.tag_set.all() :
+        tagsToAdd += tag.name+" "
+
+    return render(request, 'blog/updateArticle.html', {
+        "article":article,
+        "form":form,
+        "tagsToAdd":tagsToAdd,
+        })
 
 def deleteArticle(request, article_id) :
     article = get_object_or_404(Article, pk=article_id)
