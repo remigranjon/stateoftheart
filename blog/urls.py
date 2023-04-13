@@ -13,4 +13,5 @@ urlpatterns = [
     path('<int:article_id>/writeComment/', views.writeComment, name="writeComment"),
     path('uploadImage/', views.uploadImage, name="uploadImage"),
     path('deleteComment/', views.deleteComment, name="deleteComment"),
+    path('search/',views.searchArticle, name="search"),
     ]

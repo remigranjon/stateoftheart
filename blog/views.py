@@ -91,7 +91,7 @@ def saveArticle(request):
                     elif article.domain == "Physics" :
                         article.header_img = "domains/physics.jpg"
                 article.save()
-                
+
                 article.tag_set.clear()
 
                 if request.POST["tags"] != " " :
@@ -256,3 +256,11 @@ def deleteComment(request) :
         commentToDelete.delete()
         articleId = int(request.POST["articleId"])
         return redirect("blog:detail", article_id = articleId)
+
+def searchArticle(request) :
+       
+    if request.method == 'POST' :
+        tags = request.POST["queryText"].lower().split(" ")
+        articleList = Article.objects.filter(tag__name__in = tags).order_by('-publishing_date')
+        return render(request, "blog/results.html", {"articleList":articleList, "tags":tags})
+

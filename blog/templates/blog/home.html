@@ -7,6 +7,17 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'blog/css/home.css' %}">
 
+<section class="search">
+    <form action="{% url 'blog:search' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="queryText" placeholder="Search for an article by tags (separated by semicolon)... (e.g.:tag1 tag2)">
+        <input type="submit" value="ok">
+    </form>
+
+</section>
+
+
+
 <section class="recentPosts">
     <div class="recentPosts__header">
         <div class="horizontalBar"></div>
