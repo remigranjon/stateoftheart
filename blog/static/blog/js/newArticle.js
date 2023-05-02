@@ -12,6 +12,7 @@ const editor = new EditorJS ({
 
   tools:{
     header: Header,
+    equation: Equation,
     image: {
       class: ImageTool,
       config: {

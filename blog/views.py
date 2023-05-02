@@ -261,6 +261,39 @@ def searchArticle(request) :
        
     if request.method == 'POST' :
         tags = request.POST["queryText"].lower().split(" ")
-        articleList = Article.objects.filter(tag__name__in = tags).order_by('-publishing_date')
-        return render(request, "blog/results.html", {"articleList":articleList, "tags":tags})
+        tagsString = '+'.join(tags)
 
+        if request.POST["querySettings"]=="byTag" :
+            forcounter = 0
+            for tag in tags :
+                if forcounter==0 :
+                    referenceArticleList = Tag.objects.get(name=tag).articles.all()
+                elif forcounter > 0 :
+                    newArticleList = Tag.objects.get(name=tag).articles.all()
+                    set1 = set(referenceArticleList)
+                    set2 = set(newArticleList)
+                    referenceArticleList = list(set1 & set2)
+
+                forcounter += 1
+            return render(request, "blog/results.html", {"articleList":referenceArticleList, "tags":tags, "tagsString": tagsString})
+
+        elif request.POST["querySettings"]=="byTitle" :
+            forcounter = 0
+            for tag in tags :
+                if forcounter==0 :
+                    referenceArticleList = Article.objects.filter(title__contains=tag)
+                elif forcounter > 0 :
+                    newArticleList = Article.objects.filter(title__contains=tag)
+                    set1 = set(referenceArticleList)
+                    set2 = set(newArticleList)
+                    referenceArticleList = list(set1 & set2)
+
+                forcounter += 1
+            return render(request, "blog/results.html", {"articleList":referenceArticleList, "tags":tags, "tagsString": tagsString})
+
+
+        # if request.POST["querySettings"]=="byTag" :
+        #     articleList = Article.objects.filter(tag__name__in = tags).distinct().order_by('-publishing_date')
+        #     return render(request, "blog/results.html", {"articleList":articleList, "tags":tags, "tagsString": tagsString})
+        # elif request.POST["querySettings"]=="byTitle" :
+        #     articleList

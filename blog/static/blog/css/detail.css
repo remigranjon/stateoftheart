@@ -202,8 +202,8 @@ body {
 .articleAnchor::before {
     display: block; 
     content: " "; 
-    margin-top: -80px; 
-    height: 80px; 
+    margin-top: -140px; 
+    height: 140px; 
     visibility: hidden; 
     pointer-events: none;
 }

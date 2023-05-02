@@ -7,11 +7,22 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'blog/css/home.css' %}">
 
+<div class="returnTop" onclick="goToTop()">
+    <p>Back to Top</p>
+</div>
+
 <section class="search">
     <form action="{% url 'blog:search' %}" method="POST">
         {% csrf_token %}
-        <input type="text" name="queryText" placeholder="Search for an article by tags (separated by semicolon)... (e.g.:tag1 tag2)">
-        <input type="submit" value="ok">
+        <input type="text" name="queryText" placeholder="Click here to search for an article..." id="queryText" required>
+        <div class="queryGrey">
+            <select name="querySettings" id="querySettings" placeholder="---Select an option---">
+                <option value="byTag">search by Tag</option>
+                <option value="byTitle">search in Title</option>
+            </select>
+            <button id="querySubmit"><img src="{% static 'blog/images/icons/search.svg' %}" alt="Search icon"></button>
+        </div>
+
     </form>
 
 </section>
@@ -53,6 +64,7 @@
                 <p class="articleAbstract"> {{article.abstract|truncatechars:400}} </p>
             </div>
         </div>
+        <div class="separator"></div>
     {% endfor %}
     </div>
 

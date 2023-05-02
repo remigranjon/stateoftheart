@@ -8,12 +8,44 @@
 
 
 {% block content %}
-{% for article in articleList %}
-<p>{{article.title}}</p>
-{% endfor %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'blog/css/results.css' %}">
+
+<p class="resultsHeader">Results for "{{tagsString}}"</p>
+
+
+<div class="articleGrid">
+    {% for article in articleList %}
+        <div class="articlePreview">
+            
+            
+            {% if not article.header_img == None and article.header_img %}
+                <div class="headerImg">
+                    <img src="{{ article.header_img.url }}" alt="">
+                </div>
+            {% endif %}
+            <div class="articleContent">
+                <div class="{{ article.domain }} articleDomain" >
+                    <p>{{article.domain}}</p>
+                </div>
+                <h3>
+                    <a href="{% url 'blog:detail' article.id %}">
+                        {{ article.title }}
+                    </a>
+                </h3>
+                <p class="articlePublishingDate"> Published on {{ article.publishing_date }}</p>
+                <p class="articleAuthor"> Written by {{ article.author.username }}</p>
+                <p class="articleAbstract"> {{article.abstract|truncatechars:400}} </p>
+            </div>
+        </div>
+        <div class="separator"></div>
+    {% endfor %}
+</div>
+{% comment %}
 <p>------Tags------</p>
 {% for tag in tags %}
 <p>{{tag}}</p>
 {% endfor %}
+{% endcomment %}
 
 {% endblock %}
