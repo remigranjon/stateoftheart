@@ -51,9 +51,12 @@ def detail(request, article_id):
                 self.level = data["level"]
             elif type =="paragraph" :
                 self.text = data["text"]
-            if type == "image" :
+            elif type == "image" :
                 self.url = data["file"]["url"]
                 self.alt = data["caption"]
+            elif type == "equation" :
+                self.equation = data["equation"]
+                self.caption = data["caption"]
 
     
     rawData = json.loads(article.data)

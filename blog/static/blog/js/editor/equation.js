@@ -22,7 +22,7 @@ class Equation {
         inputEquation.style.width = "100%";
         inputEquation.style.outline = "none";
         inputEquation.style.padding = "10px";
-        inputEquation.placeholder = "Enter your equation as LaTex language";
+        inputEquation.placeholder = "Enter your equation in Tex language (e.g. : x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a} )";
         inputEquation.classList.add("inputEquation");
         if (this.data.equation) {
             inputEquation.value = this.data.equation
@@ -32,7 +32,7 @@ class Equation {
         inputCaption.style.width = "100%";
         inputCaption.style.outline = "none";
         inputCaption.style.padding = "10px";
-        inputCaption.placeholder = "Caption";
+        inputCaption.placeholder = "Caption (e.g. : (Eq.21) )";
         inputCaption.classList.add("inputCaption");
         if (this.data.caption) {
             inputCaption.value = this.data.caption

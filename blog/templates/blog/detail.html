@@ -99,6 +99,12 @@
                         </p>
                     </div>
                 {% endif %}
+                {% if block.type == "equation" %}
+                    <div class="equationWrapper">
+                        <p class="equation">\[{{block.equation}}\]</p>
+                        <p class="caption">{{block.caption}}</p>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
         
@@ -186,6 +192,7 @@
 {% endfor %}
 
 <script src="{% static 'blog/js/detail.js' %}"></script>
-
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 {% endblock content %}

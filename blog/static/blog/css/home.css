@@ -190,6 +190,6 @@ option {
 
 .separator {
     width : 300px;
-    border-bottom: grey 3px dotted;
+    border-bottom: grey 1px solid;
     margin: 30px auto;
 }
